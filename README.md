@@ -8,7 +8,7 @@ Run `npm run build` to build the project.
 
 ## Tests
 
-In `__tests__/main.test.ts` file updatde `acrolinxUrl`, `accessToken` and `clientSignature` variables with your values.
+In `__tests__/main.test.ts` file update `acrolinxUrl`, `accessToken` and `clientSignature` variables with your values.
 
 Run `npm run test`
 
