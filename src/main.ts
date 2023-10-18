@@ -1,10 +1,13 @@
 import fetch from 'cross-fetch';
+import * as fs from 'fs';
+
 import {
   AcrolinxEndpoint,
   CheckingCapabilities,
   CheckRequest,
   CheckResult,
   CheckType,
+  ContentEncoding,
   Progress,
 } from '@acrolinx/sdk';
 export class AcrolinxSDKDemo {
@@ -52,6 +55,24 @@ export class AcrolinxSDKDemo {
     };
   }
 
+    // Create a Check Request.
+    public createWordCheckRequest(batchId: string | null): CheckRequest {
+      return {
+        content: this.getFileContent("./__tests__/testDoc/file.docx"),
+        checkOptions: {
+          batchId: batchId,
+          contentFormat: 'AUTO',
+          languageId: 'en',
+          checkType: CheckType.batch,
+        },
+        document: {
+          // Furnish correct reference path for the file.
+          reference: 'C:\\docs\\file.docx',
+        },
+        contentEncoding: ContentEncoding.base64
+      };
+    }
+
   // Get Content Analysis Dashboard Link
   public async fetchContentAnalysisDashboardUrl(endpoint: AcrolinxEndpoint, accessToken: string, batchId: string): Promise<string> {
     return await endpoint.getContentAnalysisDashboard(accessToken, batchId);
@@ -83,5 +104,19 @@ export class AcrolinxSDKDemo {
 
     console.log('Check Completed');
     return checkResult;
+  }
+
+  private getFileContent(resolvedPath: string, format?: string): string {
+    try {
+      const buffer = fs.readFileSync(resolvedPath);
+      if (format) {
+        return buffer.toString(format as BufferEncoding);
+      } else {
+        return buffer.toString('base64');
+      }
+    } catch (e) {
+      throw new Error('Couldn\u2019t parse the given input item. '
+        + e.message);
+    }
   }
 }

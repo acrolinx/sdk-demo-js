@@ -51,6 +51,28 @@ describe('SDKDemo tests', () => {
     console.log('Content Analysis Dashboard Link: ' + contentAnalysisDashboardLink);
   });
 
+  it('test running check for word document', async () => {
+    const demo = new AcrolinxSDKDemo(acrolinxUrl, clientSignature);
+    const endpoint = demo.createEndpoint();
+    const checkRequest = demo.createWordCheckRequest('gen.demo.' + uuid());
+
+    const checkResult = await demo.checkWithAcrolinx(
+      endpoint,
+      checkRequest,
+      accessToken,
+    );
+    expect(checkResult).not.toBeNull();
+    expect(checkResult.quality.score).not.toBeNull();
+
+    console.log('Acrolinx Score: ' + checkResult.quality.score);
+    console.log('Scorecard Url: ' + checkResult.reports.scorecard.link);
+
+    const contentAnalysisDashboardLink = await demo.fetchContentAnalysisDashboardUrl(endpoint, accessToken, checkRequest.checkOptions.batchId);
+
+    expect(contentAnalysisDashboardLink).not.toBeNull();
+    console.log('Content Analysis Dashboard Link: ' + contentAnalysisDashboardLink);
+  });
+
   it('test fetching platform capabilities', async () => {
     const demo = new AcrolinxSDKDemo(acrolinxUrl, clientSignature);
     const endpoint = demo.createEndpoint();
