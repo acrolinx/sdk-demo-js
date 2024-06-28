@@ -38,7 +38,7 @@
   "dependencies": {
     "@acrolinx/sdk": "^0.1.9",
     "cross-fetch": "^4.0.0",
-    "tslib": "~2.4",
+    "tslib": "~2.6",
     "uuidv4": "^6.2.13"
   }
 }
