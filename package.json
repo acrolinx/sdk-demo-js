@@ -36,7 +36,7 @@
   "author": "Acrolinx GmbH",
   "license": "Apache-2.0",
   "dependencies": {
-    "@acrolinx/sdk": "^1.3.1",
+    "@acrolinx/sdk": "^1.3.5",
     "cross-fetch": "^4.0.0",
     "tslib": "^2.6.3",
     "uuidv4": "^6.2.13"
