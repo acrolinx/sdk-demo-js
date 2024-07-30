@@ -19,7 +19,7 @@
     "ts-jest": "^29.2.3",
     "tsutils": "^3.21.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.0-alpha.58"
+    "typescript-eslint": "^8.0.0-alpha.60"
   },
   "scripts": {
     "start": "node build/src/main.js",
