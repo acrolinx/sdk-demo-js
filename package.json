@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Minimal boilerplate to quick-start Acrolinx development in TypeScript.",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "devDependencies": {
     "@types/jest": "^29.5.14",
