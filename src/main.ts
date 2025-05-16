@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
 import * as fs from 'fs';
-
+import * as os from 'os';
 import {
   AcrolinxEndpoint,
   CheckingCapabilities,
@@ -10,6 +10,7 @@ import {
   ContentEncoding,
   Progress,
 } from '@acrolinx/sdk';
+import { IntegrationType, OperatingSystemFamily } from '@acrolinx/sdk/dist/src/telemetry/interfaces/integration';
 export class AcrolinxSDKDemo {
 
   private acrolinxUrl: string;
@@ -26,6 +27,25 @@ export class AcrolinxSDKDemo {
       client: {
         version: '1.0.0',
         signature: this.clientSignature,
+        integrationDetails: {
+          name: 'Acrolinx SDK Demo',
+          version: '1.0.0',
+          type: IntegrationType.automated,
+          systemInfo: {
+            operatingSystemInfo: {
+              family:
+                os.platform() === 'darwin'
+                  ? OperatingSystemFamily.mac
+                  : os.platform() === 'win32'
+                    ? OperatingSystemFamily.windows
+                    : os.platform() === 'linux'
+                      ? OperatingSystemFamily.linux
+                      : OperatingSystemFamily.other,
+              name: os.type(),
+              version: os.release(),
+            },
+          },
+        },
       },
       acrolinxUrl: this.acrolinxUrl,
       fetch: fetch,
