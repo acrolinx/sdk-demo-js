@@ -1,5 +1,5 @@
-import fetch from 'cross-fetch';
-import * as fs from 'fs';
+import fetch from "cross-fetch";
+import * as fs from "node:fs";
 import {
   AcrolinxEndpoint,
   CheckingCapabilities,
@@ -8,22 +8,21 @@ import {
   CheckType,
   ContentEncoding,
   Progress,
-} from '@acrolinx/sdk';
+} from "@acrolinx/sdk";
 export class AcrolinxSDKDemo {
-
-  private acrolinxUrl: string;
-  private clientSignature: string;
+  private readonly acrolinxUrl: string;
+  private readonly clientSignature: string;
 
   constructor(acrolinxUrl: string, clientSignature: string) {
     this.acrolinxUrl = acrolinxUrl;
     this.clientSignature = clientSignature;
   }
-  
+
   // Create Acrolinx Endpoint instance
   public createEndpoint(): AcrolinxEndpoint {
     return new AcrolinxEndpoint({
       client: {
-        version: '1.0.0',
+        version: "1.0.0",
         signature: this.clientSignature,
       },
       acrolinxUrl: this.acrolinxUrl,
@@ -32,15 +31,15 @@ export class AcrolinxSDKDemo {
   }
 
   // Create a Check Request.
-  public createCheckRequest(batchId: string | null): CheckRequest {
+  public createCheckRequest(batchId?: string): CheckRequest {
     return {
-      content: 'This sentence containss intentional spellingg mistakess.',
+      content: "This sentence containss intentional spellingg mistakess.",
       checkOptions: {
         // Define your own mechanism to generate batchId and assignment.
         // One batch of check should have one batchId
         batchId: batchId,
-        contentFormat: 'TEXT',
-        languageId: 'en',
+        contentFormat: "TEXT",
+        languageId: "en",
         //   interactive =  human user checks own document
         //   batch       =  human user checks many own documents
         //   baseline    =  a repository of documents is checked, the user doesn't own the documents
@@ -49,36 +48,43 @@ export class AcrolinxSDKDemo {
       },
       document: {
         // Furnish correct reference path for the file.
-        reference: 'C:\\docs\\file.txt',
+        reference: String.raw`C:\docs\file.txt`,
       },
     };
   }
 
-    // Create a Check Request.
-    public createWordCheckRequest(batchId: string | null): CheckRequest {
-      return {
-        content: this.getFileContent("./__tests__/testDoc/file.docx"),
-        checkOptions: {
-          batchId: batchId,
-          contentFormat: 'AUTO',
-          languageId: 'en',
-          checkType: CheckType.batch,
-        },
-        document: {
-          // Furnish correct reference path for the file.
-          reference: 'C:\\docs\\file.docx',
-        },
-        contentEncoding: ContentEncoding.base64
-      };
-    }
+  // Create a Check Request.
+  public createWordCheckRequest(batchId?: string): CheckRequest {
+    return {
+      content: this.getFileContent("./__tests__/testDoc/file.docx"),
+      checkOptions: {
+        batchId: batchId,
+        contentFormat: "AUTO",
+        languageId: "en",
+        checkType: CheckType.batch,
+      },
+      document: {
+        // Furnish correct reference path for the file.
+        reference: String.raw`C:\docs\file.docx`,
+      },
+      contentEncoding: ContentEncoding.base64,
+    };
+  }
 
   // Get Content Analysis Dashboard Link
-  public async fetchContentAnalysisDashboardUrl(endpoint: AcrolinxEndpoint, accessToken: string, batchId: string): Promise<string> {
+  public async fetchContentAnalysisDashboardUrl(
+    endpoint: AcrolinxEndpoint,
+    accessToken: string,
+    batchId: string,
+  ): Promise<string> {
     return await endpoint.getContentAnalysisDashboard(accessToken, batchId);
   }
 
   // Get Acrolinx Platform Checking Capabilities
-  public async getPlatformCapabilities(endpoint: AcrolinxEndpoint, accessToken: string): Promise<CheckingCapabilities> {
+  public async getPlatformCapabilities(
+    endpoint: AcrolinxEndpoint,
+    accessToken: string,
+  ): Promise<CheckingCapabilities> {
     return await endpoint.getCheckingCapabilities(accessToken);
   }
 
@@ -88,20 +94,16 @@ export class AcrolinxSDKDemo {
     checkRequest: CheckRequest,
     accessToken: string,
   ): Promise<CheckResult> {
-    const checkResponse = endpoint.checkAndGetResult(
-      accessToken,
-      checkRequest,
-      {
-        onProgress: (progress: Progress) => {
-          console.log(progress);
-        },
+    const checkResponse = endpoint.checkAndGetResult(accessToken, checkRequest, {
+      onProgress: (progress: Progress) => {
+        console.log(progress);
       },
-    );
+    });
 
-    console.log('Check in progress: ' + checkResponse.getId());
+    console.log("Check in progress: " + checkResponse.getId());
     const checkResult = await checkResponse.promise;
 
-    console.log('Check Completed');
+    console.log("Check Completed");
     return checkResult;
   }
 
@@ -111,11 +113,10 @@ export class AcrolinxSDKDemo {
       if (format) {
         return buffer.toString(format as BufferEncoding);
       } else {
-        return buffer.toString('base64');
+        return buffer.toString("base64");
       }
     } catch (e) {
-      throw new Error('Couldn\u2019t parse the given input item. '
-        + e.message);
+      throw new Error("Couldn\u2019t parse the given input item. " + e.message);
     }
   }
 }

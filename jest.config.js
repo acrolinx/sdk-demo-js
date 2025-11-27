@@ -16,13 +16,13 @@
 
 module.exports = {
   transform: {
-    '^.+\\.ts$': 'ts-jest',
+    "^.+\\.ts$": "ts-jest",
   },
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(ts)$',
-  moduleFileExtensions: ['ts', 'js'],
-  coverageDirectory: 'tmp/coverage',
-  coverageReporters: ['cobertura', 'json', 'lcov', 'text'],
-  collectCoverageFrom: ['src/**/*'],
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(ts)$",
+  moduleFileExtensions: ["ts", "js"],
+  coverageDirectory: "tmp/coverage",
+  coverageReporters: ["cobertura", "json", "lcov", "text"],
+  collectCoverageFrom: ["src/**/*"],
   coverageThreshold: {
     global: {
       statements: 93.5,
@@ -32,14 +32,14 @@ module.exports = {
     },
   },
   reporters: [
-    'default',
+    "default",
     [
-      'jest-junit',
+      "jest-junit",
       {
-        outputDirectory: 'tmp',
-        outputName: 'junit.xml',
+        outputDirectory: "tmp",
+        outputName: "junit.xml",
       },
     ],
   ],
-  testURL: 'http://localhost/',
+  testURL: "http://localhost/",
 };
