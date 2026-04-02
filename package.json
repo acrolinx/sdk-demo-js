@@ -15,7 +15,7 @@
     "jest-junit": "16.0.0",
     "prettier": "3.8.1",
     "rimraf": "6.1.3",
-    "ts-jest": "29.4.6",
+    "ts-jest": "29.4.9",
     "tsutils": "3.21.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.58.0"
