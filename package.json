@@ -8,7 +8,7 @@
   "devDependencies": {
     "@types/jest": "30.0.0",
     "@types/node": "26.6.1",
-    "dotenv": "17.4.2",
+    "dotenv": "18.0.0",
     "eslint": "10.11.0",
     "eslint-plugin-sonarjs": "4.2.1",
     "jest": "30.5.2",
